@@ -1,0 +1,69 @@
+{% extends 'main.html' %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+    <div class="d-flex flex-column align-items-center">
+        <h1>Connexion</h1>
+
+        <form method="post" novalidate>
+            {% csrf_token %}
+
+            <div class='form-group d-flex flex-column align-items-start'>
+                {{ form.username.label_tag }}
+                {% if form.is_bound %}
+                    {% if form.username.errors %}
+                        {% render_field form.username class='is-invalid' %}
+                        {% for error in form.username.errors %}
+                            <div class='invalid-feedback d-block'>
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        {% render_field form.username class='is-valid' %}
+                    {% endif %}
+                {% else %}
+                    {% render_field form.username %}
+                {% endif %}
+                {% if form.username.help_text %}
+                    <small class='form-text text-muted'>
+                        {{ form.username.help_text }}
+                    </small>
+                {% endif %}
+            </div>
+
+            <div class='form-group d-flex flex-column align-items-start'>
+                {{ form.password.label_tag }}
+                {% if form.is_bound %}
+                    {% if form.password.errors %}
+                        {% render_field form.password class='is-invalid' %}
+                        {% for error in form.password.errors %}
+                            <div class='invalid-feedback d-block'>
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        {% render_field form.password class='is-valid' %}
+                    {% endif %}
+                {% else %}
+                    {% render_field form.password %}
+                {% endif %}
+                {% if form.password.help_text %}
+                    <small class='form-text text-muted'>
+                        {{ form.password.help_text }}
+                    </small>
+                {% endif %}
+            </div>
+
+            {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}
+                    <div class='invalid-feedback d-block'>
+                        {{ error }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <button type="submit" class="btn btn-primary btn-block">Connexion</button>
+        </form>
+    </div>
+{% endblock content %}
